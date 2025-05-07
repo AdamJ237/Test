@@ -13,19 +13,22 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | b
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+APP_DIR="$HOME/spring-petclinic-angular"
+BUILD_DIR="$APP_DIR/dist/spring-petclinic-angular"
 
 nvm install 16
-git clone https://github.com/spring-petclinic/spring-petclinic-angular
-cd spring-petclinic-angular
+git clone https://github.com/spring-petclinic/spring-petclinic-angular "$APP_DIR"
+cd "$APP_DIR"
 #sed -i "s/localhost/$SERVER_IP/g" src/environments/environment.prod.ts src/environments/environment.ts
-sed -i 's|http://[^"]*||g' src/environments/environment*.ts
+sed -i "s|'http://[^']*'|'/petclinic'|g" src/environments/environment*.ts
 #sed -i "s/9966/$SERVER_PORT/g" src/environments/environment.prod.ts src/environments/environment.ts
 npm install
 #npm install -g angular-http-server
 npm run build -- --configuration production
 #nohup npx angular-http-server --path ./dist -p $FRONT_PORT > angular.out 2> angular.err &
 sudo mkdir -p /var/www/petclinic
-sudo cp -r dist/spring-petclinic-angular/* /var/www/petclinic/
+sudo cp -r "$BUILD_DIR"/* /var/www/petclinic/
+sudo chown -R www-data:www-data /var/www/petclinic
 # Instalacja i konfiguracja Nginx jako reverse proxy
 sudo apt-get install -y nginx
 
