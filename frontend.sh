@@ -24,7 +24,8 @@ npm install
 #npm install -g angular-http-server
 npm run build -- --configuration production
 #nohup npx angular-http-server --path ./dist -p $FRONT_PORT > angular.out 2> angular.err &
-
+sudo mkdir -p /var/www/petclinic
+sudo cp -r dist/spring-petclinic-angular/* /var/www/petclinic/
 # Instalacja i konfiguracja Nginx jako reverse proxy
 sudo apt-get install -y nginx
 
@@ -32,7 +33,7 @@ cat <<EOF | sudo tee /etc/nginx/sites-available/petclinic.conf
 server {
     listen 80;
     server_name _;
-    root /root/spring-petclinic-angular/dist/spring-petclinic-angular;
+    root /var/www/petclinic;
 
     location / {
         try_files \$uri \$uri/ /index.html;
