@@ -19,7 +19,7 @@ nvm install 16
 git clone https://github.com/spring-petclinic/spring-petclinic-angular "$APP_DIR"
 cd "$APP_DIR"
 #sed -i "s/localhost/$SERVER_IP/g" src/environments/environment.prod.ts src/environments/environment.ts
-sed -i "s|'http://[^']*'|'/petclinic/api'|g" src/environments/environment*.ts
+sed -i "s|'http://[^']*'|'/petclinic/api/'|g" src/environments/environment*.ts
 #sed -i "s/9966/$SERVER_PORT/g" src/environments/environment.prod.ts src/environments/environment.ts
 npm install
 #npm install -g angular-http-server
