@@ -13,13 +13,13 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 APP_DIR="$HOME/spring-petclinic-angular"
-BUILD_DIR="$APP_DIR/dist/"
+BUILD_DIR="$APP_DIR/dist"
 
 nvm install 16
 git clone https://github.com/spring-petclinic/spring-petclinic-angular "$APP_DIR"
 cd "$APP_DIR"
 #sed -i "s/localhost/$SERVER_IP/g" src/environments/environment.prod.ts src/environments/environment.ts
-sed -i "s|'http://[^']*'|'/petclinic'|g" src/environments/environment*.ts
+sed -i "s|'http://[^']*'|'/petclinic/api'|g" src/environments/environment*.ts
 #sed -i "s/9966/$SERVER_PORT/g" src/environments/environment.prod.ts src/environments/environment.ts
 npm install
 #npm install -g angular-http-server
@@ -41,8 +41,8 @@ server {
         try_files \$uri \$uri/ /index.html;
     }
 
-    location /petclinic/ {
-        proxy_pass http://$SERVER_IP:$SERVER_PORT/petclinic/;
+    location /petclinic/api/ {
+        proxy_pass http://$SERVER_IP:$SERVER_PORT/petclinic/api/;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
     }
